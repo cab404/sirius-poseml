@@ -7,7 +7,7 @@ LOGREG_MODELS_DIR = "lg_models"
 import os
 from catboost import *
 
-os.chdir(os.path.join(os.path.split(__file__)[:-1]))
+os.chdir(os.path.split(__file__)[0])
 
 def load_classifier(fname: str) -> CatBoostClassifier:
     m = CatBoostClassifier()
