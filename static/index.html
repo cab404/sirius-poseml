@@ -25,10 +25,9 @@
             function snap(){
                 l.ctx.fillRect(0, 0, l.canvas.width, l.canvas.height);
                 l.ctx.drawImage(video, 0, 0, l.canvas.width, l.canvas.height)
-                return l.canvas.toDataURL("image/jpeg")
-                // return new Promise((resolve, reject) => 
-                //     l.canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.9)
-                // )
+                return new Promise((resolve, reject) =>
+                    l.canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.9)
+                )
             }
 
             function wait(ms) {
