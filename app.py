@@ -9,14 +9,23 @@ log.info("[...] Starting PoseML")
 
 log.info("[...] Pose recognizer...")
 from pose import get_pose
+log.info("[...] Catboost model...")
+from cb_model import get_catboost_pred, catboost_models
 log.info("[+++] Complete! Starting server.")
-
-# os.chdir(os.path.split(__file__)[0])
 
 app = Flask("mahalovo")
 
-def categorize(image):
+def logreg_categorize(image):
+    # TODO: Add logreg implementation here
+    log.info(f"[LogReg] Predicted {pred} with P={acc} !")
     return (1, 0.33)
+
+def catboost_categorize(image):
+    pred, acc = get_catboost_pred(image, catboost_models[1])
+    log.info(f"[Catboost] Predicted {pred} with P={acc} !")
+    return (pred, acc)
+
+categorize = catboost_categorize
 
 @app.route('/')
 def index():
