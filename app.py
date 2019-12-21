@@ -2,7 +2,7 @@ from flask import Flask, request
 
 app = Flask("mahalovo")
 
-@app.route("/api/recognize")
+@app.route("/api/recognize", methods=["POST"])
 def recognize():
     print(request.data)
     return "test"
