@@ -51,10 +51,12 @@
 
             async function loop(){
                 await load()
+                pred_acc = document.getElementById("predacc")
                 while (true) {
                     await wait(1000)
                     image = await snap()
                     send_image(image).then((resp) => {
+                        pred_acc.textContent = resp.pred + " " + resp.acc
                     })
                 }
             }
@@ -65,5 +67,6 @@
         <video id="video"></video>
         <canvas id="canvas"></canvas>
         <button onclick="snap()"></button>
+        <h1><div id="predacc"></div></h1>
     </body>
 </html>
