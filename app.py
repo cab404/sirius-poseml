@@ -1,8 +1,9 @@
 from flask import Flask, request
 # from check import get_catboost_pred 
 from PIL import Image
-import json
-import io
+import json, io, os
+
+os.chdir(os.path.split(__file__)[0])
 
 app = Flask("mahalovo")
 
