@@ -1,7 +1,15 @@
 from flask import Flask, request
 from PIL import Image
 import json, io, os
+import logging
+
+log = logging.getLogger("mahalovo")
+log.level = logging.INFO
+log.info("[...] Starting PoseML")
+
+log.info("[...] Pose recognizer...")
 from pose import get_pose
+log.info("[+++] Complete! Starting server.")
 
 # os.chdir(os.path.split(__file__)[0])
 
