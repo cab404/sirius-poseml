@@ -3,6 +3,10 @@ from PIL import Image
 
 app = Flask("mahalovo")
 
+@app.route('/')
+def index():
+    return open("static/index.html", "r").read()
+
 @app.route("/api/recognize", methods=["POST"])
 def recognize():
     imgdata = request.get_data()

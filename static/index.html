@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script>
+            l = {}
+
+            async function load() {
+                
+                l.canvas = document.getElementById("canvas")
+                l.video = document.getElementById("video")
+                l.ctx = canvas.getContext("2d")
+    
+                l.video.srcObject = await navigator.mediaDevices.getUserMedia({video: {width: 300, height: 288}})
+                l.video.play()
+                settings = l.video.srcObject.getVideoTracks()[0].getSettings()
+
+                l.video.width = settings.width
+                l.video.height = settings.height
+                l.canvas.width = settings.width
+                l.canvas.height = settings.height
+
+            }
+            
+            function snap(){
+                l.ctx.fillRect(0, 0, l.canvas.width, l.canvas.height);
+                l.ctx.drawImage(video, 0, 0, l.canvas.width, l.canvas.height)
+                return l.canvas.toDataURL("image/jpeg")
+                // return new Promise((resolve, reject) => 
+                //     l.canvas.toBlob((blob) => resolve(blob), "image/jpeg", 0.9)
+                // )
+            }
+
+            function wait(ms) {
+                return new Promise((resolve, reject) => 
+                    setTimeout(() => { resolve() }, ms) 
+                )
+            }
+
+            async function loop(){
+                await load()
+                while (true) {
+                    await wait(1000)
+                    image = await snap()
+                    console.log(image)
+                    request_data = new FormData()
+                    
+                    request_data.append("image", image)
+                    
+                    var request = new XMLHttpRequest();
+                    request.open("POST", "/api/recognize");
+                    request.send(request_data);
+                }
+            }
+
+        </script>
+    </head>
+    <body onload="loop()">
+        <video id="video"></video>
+        <canvas id="canvas"></canvas>
+        <button onclick="snap()"></button>
+    </body>
+</html>
