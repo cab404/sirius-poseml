@@ -1,6 +1,6 @@
 TF_CUDNN_USE_AUTOTUNE=0
 
-import sys
+import sys, os
 from PIL import Image
 
 sys.path.insert(1, 'pose_tensorflow')
@@ -9,9 +9,12 @@ from util.config import load_config
 from nnet import predict
 from util import visualize
 from dataset.pose_dataset import data_to_input
+
+os.chdir("pose_tensorflow")
 cfg = {}
-cfg['cfg'] = load_config("pose_tensorflow/demo/pose_cfg.yaml")
+cfg['cfg'] = load_config("demo/pose_cfg.yaml")
 cfg['sess'], cfg['inputs'], cfg['outputs'] = predict.setup_pose_prediction(cfg['cfg'])
+os.chdir("..")
 
 def resize_image(img: Image):
     basewidth = 300
