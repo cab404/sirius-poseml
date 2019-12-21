@@ -36,19 +36,26 @@
                 )
             }
 
+            function send_image(image) {
+                return new Promise((resolve, reject) => {
+                    request_data = new FormData()
+                    request_data.append("image", image)
+
+                    var request = new XMLHttpRequest()
+                    request.open("POST", "/api/recognize")
+                    request.onload = (resp) => resolve(JSON.parse(resp.srcElement.response))
+
+                    request.send(request_data)
+                })
+            }
+
             async function loop(){
                 await load()
                 while (true) {
                     await wait(1000)
                     image = await snap()
-                    console.log(image)
-                    request_data = new FormData()
-                    
-                    request_data.append("image", image)
-                    
-                    var request = new XMLHttpRequest();
-                    request.open("POST", "/api/recognize");
-                    request.send(request_data);
+                    send_image(image).then((resp) => {
+                    })
                 }
             }
 
