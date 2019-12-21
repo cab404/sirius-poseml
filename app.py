@@ -8,7 +8,7 @@ from pose import get_pose
 app = Flask("mahalovo")
 
 def categorize(image):
-    return 1
+    return (1, 0.33)
 
 @app.route('/')
 def index():
@@ -18,6 +18,7 @@ def index():
 def recognize():
     raw_image = request.files["image"].read()
     image = Image.open(io.BytesIO(raw_image))
-    return json.dumps({"category": categorize(image)})
+    pred, acc = categorize(image)
+    return json.dumps({"pred": pred, "acc": acc})
 
 app.run(port=8080)

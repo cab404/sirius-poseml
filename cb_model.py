@@ -4,6 +4,7 @@
 CATBOOST_MODELS_DIR = "cb_models"
 
 import os
+from angles import get_ang
 from catboost import *
 
 def load_classifier(fname: str) -> CatBoostClassifier:
@@ -23,4 +24,6 @@ from PIL import Image
 def get_catboost_pred(image, classifier):
     pose = get_pose(image)
     angles = get_ang(pose)
-    return int(classifier.predict(angles).item())
+    prediction = classifier.predict_proba(angles)
+    i = prediction.argmax()
+    return (int(i), float(prediction[i]))
