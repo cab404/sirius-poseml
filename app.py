@@ -1,5 +1,4 @@
 from flask import Flask, request
-from check import get_catboost_pred 
 from PIL import Image
 import json, io, os
 
