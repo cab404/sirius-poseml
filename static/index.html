@@ -6,11 +6,11 @@
             l = {}
 
             async function load() {
-                
+
                 l.canvas = document.getElementById("canvas")
                 l.video = document.getElementById("video")
                 l.ctx = canvas.getContext("2d")
-    
+
                 l.video.srcObject = await navigator.mediaDevices.getUserMedia({video: {width: 300, height: 288}})
                 l.video.play()
                 settings = l.video.srcObject.getVideoTracks()[0].getSettings()
@@ -21,7 +21,7 @@
                 l.canvas.height = settings.height
 
             }
-            
+
             function snap(){
                 l.ctx.fillRect(0, 0, l.canvas.width, l.canvas.height);
                 l.ctx.drawImage(video, 0, 0, l.canvas.width, l.canvas.height)
@@ -32,8 +32,8 @@
             }
 
             function wait(ms) {
-                return new Promise((resolve, reject) => 
-                    setTimeout(() => { resolve() }, ms) 
+                return new Promise((resolve, reject) =>
+                    setTimeout(() => { resolve() }, ms)
                 )
             }
 
