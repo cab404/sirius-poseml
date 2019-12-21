@@ -1,8 +1,8 @@
 from flask import Flask, request
 from PIL import Image
 import json, io, os
+from pose import get_pose
 
-from ch import pose
 # os.chdir(os.path.split(__file__)[0])
 
 app = Flask("mahalovo")
