@@ -11,21 +11,24 @@ log.info("[...] Pose recognizer...")
 from pose import get_pose
 log.info("[...] Catboost model...")
 from cb_model import get_catboost_pred, catboost_models
+log.info("[...] logreg model...")
+from lg_model import get_logreg_pred, logreg_models
 log.info("[+++] Complete! Starting server.")
 
 app = Flask("mahalovo")
 
 def logreg_categorize(image):
+    pred, acc = get_logreg_pred(image, logreg_models[0])
     # TODO: Add logreg implementation here
     log.info(f"[LogReg] Predicted {pred} with P={acc} !")
-    return (1, 0.33)
+    return (pred, acc)
 
 def catboost_categorize(image):
     pred, acc = get_catboost_pred(image, catboost_models[1])
     log.info(f"[Catboost] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
-categorize = catboost_categorize
+categorize = logreg_categorize
 
 @app.route('/')
 def index():
@@ -39,3 +42,4 @@ def recognize():
     return json.dumps({"pred": pred, "acc": acc})
 
 app.run(host='0.0.0.0', port=8080)
+
