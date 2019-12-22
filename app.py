@@ -15,13 +15,20 @@ from pose import get_pose
 log.info("[...] Random Forest Classifier model...")
 from rf_model import get_randomforest_pred, rf_model
 log.info("[...] Logistic Regression model...")
-from lr_model import get_logreg_pred, model
+from lr_model import get_logreg_pred, logreg_model
+log.info("[...] Tree Decision model...")
+from td_model import get_treedec_pred, treedec_model
 log.info("[+++] Complete! Starting server.")
 
 app = Flask("mahalovo")
 
+def treedec_categorize(image):
+    pred, acc = get_treedec_pred(image, treedec_model)
+    log.info(f"[TreeDec] Predicted {pred} with P={acc}")
+    return (pred, acc)
+
 def logreg_categorize(image):
-    pred, acc = get_logreg_pred(image, model)
+    pred, acc = get_logreg_pred(image, logreg_model)
     log.info(f"[LogReg] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
@@ -40,7 +47,7 @@ def randomforest_categorize(image):
     log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
-categorize = randomforest_categorize
+categorize = treedec_categorize
 
 @app.route('/')
 def index():

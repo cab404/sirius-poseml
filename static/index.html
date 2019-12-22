@@ -52,9 +52,23 @@
             }
 			
 			async function blink(){
+				var steps = 25;
+				var red_change = 255 / steps;
+				var green_change = 255 / steps;
+				var blue_change = 255 / steps;
+				var currentcolor = [0, 0, 0];
+				document.body.style.backgroundColor = "#000000"
+				for(i = 0; i < steps; i++){
+					currentcolor[0] = parseInt(currentcolor[0] + red_change);
+					currentcolor[1] = parseInt(currentcolor[1] + green_change);
+					currentcolor[2] = parseInt(currentcolor[2] + blue_change);
+					document.body.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
+					await wait(20);
+				}
+				/*element.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
 				document.body.style.backgroundColor = "#FF0000"
 				await wait(100)
-				document.body.style.backgroundColor = "#FFFFFF"
+				document.body.style.backgroundColor = "#FFFFFF"*/
 			}
 
             st = []
@@ -64,8 +78,9 @@
                 nonce = 0
                 while (true) {
                     await wait(DELAY)
-                    image = await snap()
 					blink()
+					await wait(25);
+                    image = await snap()
                     send_image(image).then((resp) => {
                         pred_acc.textContent = resp.pred
                         st.push(resp.pred)
