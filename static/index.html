@@ -50,6 +50,12 @@
                     request.send(request_data)
                 })
             }
+			
+			async function blink(){
+				document.body.style.backgroundColor = "#FF0000"
+				await wait(100)
+				document.body.style.backgroundColor = "#FFFFFF"
+			}
 
             st = []
             async function loop(){
@@ -59,6 +65,7 @@
                 while (true) {
                     await wait(DELAY)
                     image = await snap()
+					blink()
                     send_image(image).then((resp) => {
                         pred_acc.textContent = resp.pred
                         st.push(resp.pred)
