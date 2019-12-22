@@ -1,5 +1,6 @@
 from flask import Flask, request
 from PIL import Image
+import random # for testing purposes
 import json, io, os
 import logging
 
@@ -29,6 +30,11 @@ def catboost_categorize(image):
     log.info(f"[Catboost] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
+def dummy_categorize(image):
+    pred, acc = (random.randint(0, 2), random.random())
+    log.info(f'[Dummy] Predicted {pred} with P={acc} !')
+    return (pred, acc)
+
 def randomforest_categorize(image):
     pred, acc = get_randomforest_pred(image, catboost_models[1])
     log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
@@ -40,6 +46,10 @@ categorize = catboost_categorize
 def index():
     return open("static/index.html", "r").read()
 
+@app.route('/static/favicon.ico')
+def favicon():
+    return open('static/favicon.ico', 'rb').read()
+
 @app.route("/api/recognize", methods=["POST"])
 def recognize():
     raw_image = request.files["image"].read()
@@ -48,3 +58,4 @@ def recognize():
     return json.dumps({"pred": pred, "acc": acc})
 
 app.run(host='0.0.0.0', port=8080)
+
