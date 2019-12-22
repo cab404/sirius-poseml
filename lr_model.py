@@ -9,7 +9,7 @@ from pose import get_pose
 from PIL import Image
 import pickle
 
-model = pickle.load(open(LOGREG_MODEL_NAME, "rb"))
+logreg_model = pickle.load(open(LOGREG_MODEL_NAME, "rb"))
 
 
 def get_logreg_pred(image, model):
