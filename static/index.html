@@ -52,7 +52,9 @@
             async function loop(){
                 await load()
                 pred_acc = document.getElementById("predacc")
+                nonce = 0
                 while (true) {
+                    nonce++
                     await wait(1000)
                     image = await snap()
                     send_image(image).then((resp) => {
