@@ -1,6 +1,5 @@
 from flask import Flask, request
 from PIL import Image
-import random # for testing purposes
 import json, io, os
 import logging
 
@@ -38,7 +37,8 @@ def catboost_categorize(image):
     return (pred, acc)
 
 def dummy_categorize(image):
-    pred, acc = (random.randint(0, 2), random.random())
+    _ = input().split()
+    pred, acc = int(_[0]), float(_[1])
     log.info(f'[Dummy] Predicted {pred} with P={acc} !')
     return (pred, acc)
 

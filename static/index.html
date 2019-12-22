@@ -71,7 +71,19 @@
 				document.body.style.backgroundColor = "#FFFFFF"*/
 			}
 
-            st = []
+            function get_char(st) {
+                return String.fromCharCode('a'.charCodeAt(0) + 9 * st[0] + 3 * st[1] + st[2])
+            }
+            
+            function eq(a, b) {
+                if (a ^ b) return false;
+                if (a.length != b.length) return false;
+                for (i = 0; i < a.length; i++) if (a[i] != b[i]) return false;
+                return true;
+            }
+
+            var st = []
+            var crit_acc = 0.4
             async function loop(){
                 await load()
                 pred_acc = document.getElementById("predacc")
@@ -82,14 +94,22 @@
 					await wait(25);
                     image = await snap()
                     send_image(image).then((resp) => {
-                        pred_acc.textContent = resp.pred
-                        st.push(resp.pred)
-                        stack.textContent += resp.pred
+                        pred_acc.textContent = resp.pred + ' ' + resp.acc
+
+                        if (resp.acc >= crit_acc) {
+                            st.push(resp.pred)
+                            stack.textContent += resp.pred
+                        }
                     })
 
-                    if (st.length == 3) {
-                        message.textContent += String.fromCharCode('a'.charCodeAt(0) + st[0] * 9 + st[1] * 3 + st[2])
-                        st = []
+                    if (st.length >= 3) {
+                        if (eq(st.slice(0, 3), [2, 2, 2])) {
+                            message.textContent = ''
+                        } else {
+                            message.textContent += get_char(st)
+                        }
+                                            
+                        st = st.slice(3)
                         stack.textContent = String()
                     }
                 }
