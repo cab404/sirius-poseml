@@ -12,6 +12,8 @@ from pose import get_pose
 log.info("[...] Catboost model...")
 from cb_model import get_catboost_pred, catboost_models
 log.info("[...] Logistic Regression model...")
+from rf_model import get_randomforest_pred, rf_model
+log.info("[...] Random Forest Classifier model...")
 from lr_model import get_logreg_pred, model
 log.info("[+++] Complete! Starting server.")
 
@@ -28,8 +30,8 @@ def catboost_categorize(image):
     return (pred, acc)
 
 def randomforest_categorize(image):
-    pred, acc = get_catboost_pred(image, catboost_models[1])
-    log.info(f"[RandomForest] Predicted {pred} with P={acc} !")
+    pred, acc = get_randomforest_pred(image, catboost_models[1])
+    log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
 categorize = catboost_categorize
