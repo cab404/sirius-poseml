@@ -10,8 +10,8 @@ log.info("[...] Starting PoseML")
 
 log.info("[...] Pose recognizer...")
 from pose import get_pose
-log.info("[...] Catboost model...")
-from cb_model import get_catboost_pred, catboost_models
+# log.info("[...] Catboost model...")
+# from cb_model import get_catboost_pred, catboost_models
 log.info("[...] Random Forest Classifier model...")
 from rf_model import get_randomforest_pred, rf_model
 log.info("[...] Logistic Regression model...")
@@ -36,7 +36,7 @@ def dummy_categorize(image):
     return (pred, acc)
 
 def randomforest_categorize(image):
-    pred, acc = get_randomforest_pred(image, catboost_models[1])
+    pred, acc = get_randomforest_pred(image, rf_model)
     log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
     return (pred, acc)
 

@@ -24,7 +24,7 @@ from PIL import Image
 
 def get_logreg_pred(image, classifier):
     pose = get_pose(image)
-	pose = clip_pose(pose)
+    pose = clip_pose(pose)
     angles = get_ang(pose)
     prediction = classifier.predict_proba((np.array(angles)).reshape(1, -1))
     i = prediction[0].argmax()
