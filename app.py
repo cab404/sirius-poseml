@@ -1,5 +1,6 @@
 from flask import Flask, request
 from PIL import Image
+import random # for testing purposes
 import json, io, os
 import logging
 
@@ -11,9 +12,9 @@ log.info("[...] Pose recognizer...")
 from pose import get_pose
 log.info("[...] Catboost model...")
 from cb_model import get_catboost_pred, catboost_models
-log.info("[...] Logistic Regression model...")
-from rf_model import get_randomforest_pred, rf_model
 log.info("[...] Random Forest Classifier model...")
+from rf_model import get_randomforest_pred, rf_model
+log.info("[...] Logistic Regression model...")
 from lr_model import get_logreg_pred, model
 log.info("[+++] Complete! Starting server.")
 
@@ -29,16 +30,25 @@ def catboost_categorize(image):
     log.info(f"[Catboost] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
+def dummy_categorize(image):
+    pred, acc = (random.randint(0, 2), random.random())
+    log.info(f'[Dummy] Predicted {pred} with P={acc} !')
+    return (pred, acc)
+
 def randomforest_categorize(image):
     pred, acc = get_randomforest_pred(image, catboost_models[1])
     log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
-categorize = catboost_categorize
+categorize = randomforest_categorize
 
 @app.route('/')
 def index():
     return open("static/index.html", "r").read()
+
+@app.route('/static/favicon.ico')
+def favicon():
+    return open('static/favicon.ico', 'rb').read()
 
 @app.route("/api/recognize", methods=["POST"])
 def recognize():
@@ -48,3 +58,4 @@ def recognize():
     return json.dumps({"pred": pred, "acc": acc})
 
 app.run(host='0.0.0.0', port=8080)
+

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="icon" href="/static/favicon.ico">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <script>
             l = {}
@@ -50,22 +51,32 @@
                 })
             }
 
+            st = []
             async function loop(){
                 await load()
                 pred_acc = document.getElementById("predacc")
+                nonce = 0
                 while (true) {
                     await wait(DELAY)
                     image = await snap()
                     send_image(image).then((resp) => {
-                        pred_acc.textContent = resp.pred + " " + resp.acc
+                        pred_acc.textContent = resp.pred
+                        st.push(resp.pred)
+                        stack.textContent += resp.pred
                     })
+
+                    if (st.length == 3) {
+                        message.textContent += String.fromCharCode('a'.charCodeAt(0) + st[0] * 9 + st[1] * 3 + st[2])
+                        st = []
+                        stack.textContent = String()
+                    }
                 }
             }
 
             function updTime(){
                 DELAY = document.getElementById("slider").value;
             }
-            
+
         </script>
     </head>
     <body onload="loop()">
@@ -75,5 +86,7 @@
         <h1><div id="predacc"></div></h1>
         <p> Current Delay: 400 <input type="range" min="400" max="3000" step="100" value="1000" id="slider" oninput="updTime()">
 		3000 </p>
+        <h1><div id="stack"></div><h1>
+        <h1><div id="message"><div></h1>
     </body>
 </html>
