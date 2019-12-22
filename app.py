@@ -11,9 +11,9 @@ log.info("[...] Pose recognizer...")
 from pose import get_pose
 log.info("[...] Catboost model...")
 from cb_model import get_catboost_pred, catboost_models
-log.info("[...] Logistic Regression model...")
-from rf_model import get_randomforest_pred, rf_model
 log.info("[...] Random Forest Classifier model...")
+from rf_model import get_randomforest_pred, rf_model
+log.info("[...] Logistic Regression model...")
 from lr_model import get_logreg_pred, model
 log.info("[+++] Complete! Starting server.")
 
