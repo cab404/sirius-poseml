@@ -105,7 +105,11 @@
                     if (st.length >= 3) {
                         if (eq(st.slice(0, 3), [2, 2, 2])) {
                             message.textContent = ''
-                        } else {
+                        } else if(eq(st.slice(0, 3), [3, 3, 3])){
+							message_pool.textContent += message.textContent;
+							message_pool.textContent += '\n';
+							message.textContent = '';
+                        }else{
                             message.textContent += get_char(st)
                         }
                                             
@@ -130,5 +134,6 @@
 		3000 </p>
         <h1><div id="stack"></div><h1>
         <h1><div id="message"><div></h1>
+        <h1><div id="message_pool"><div></h1>
     </body>
 </html>
