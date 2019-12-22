@@ -64,7 +64,7 @@
                         st.push(resp.pred)
                         stack.textContent += resp.pred
                     })
-                    
+
                     if (st.length == 3) {
                         message.textContent += String.fromCharCode('a'.charCodeAt(0) + st[0] * 9 + st[1] * 3 + st[2])
                         st = []
@@ -72,7 +72,7 @@
                     }
                 }
             }
-            
+
         </script>
     </head>
     <body onload="loop()">
