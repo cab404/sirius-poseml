@@ -23,6 +23,7 @@ from PIL import Image
 
 def get_catboost_pred(image, classifier):
     pose = get_pose(image)
+	pose = clip_pose(pose)
     angles = get_ang(pose)
     prediction = classifier.predict_proba(angles)
     i = prediction.argmax()

@@ -4,7 +4,7 @@
 LOGREG_MODELS_DIR = "lg_models"
 
 import os
-from angles import get_ang
+from angles import get_ang, clip_pose
 from sklearn.linear_model import LogisticRegression
 import pickle
 
@@ -24,6 +24,7 @@ from PIL import Image
 
 def get_logreg_pred(image, classifier):
     pose = get_pose(image)
+	pose = clip_pose(pose)
     angles = get_ang(pose)
     prediction = classifier.predict_proba((np.array(angles)).reshape(1, -1))
     i = prediction[0].argmax()

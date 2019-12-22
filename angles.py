@@ -1,5 +1,9 @@
 import numpy as np
 
+def clip_pose(pose):
+    leave = [2,3,6,7,8,9,10,11]
+    return np.array(list(map(lambda a: pose[a], leave)))
+
 def get_ang(pose):
     features = []
     for i in range(len(pose)):
