@@ -1,4 +1,4 @@
-![mow](./title.png)
+![mow](title.png)
 
 Recognizing poses and typing text.
 
