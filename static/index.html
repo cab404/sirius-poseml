@@ -50,6 +50,7 @@
                 })
             }
 
+            st = []
             async function loop(){
                 await load()
                 pred_acc = document.getElementById("predacc")
@@ -57,8 +58,16 @@
                     await wait(1000)
                     image = await snap()
                     send_image(image).then((resp) => {
-                        pred_acc.textContent = resp.pred + " " + resp.acc
+                        pred_acc.textContent = resp.pred
+                        st.push(resp.pred)
+                        stack.textContent += resp.pred
                     })
+                    
+                    if (st.length == 3) {
+                        message.textContent += String.fromCharCode('a'.charCodeAt(0) + st[0] * 9 + st[1] * 3 + st[2])
+                        st = []
+                        stack.textContent = String()
+                    }
                 }
             }
 
@@ -69,5 +78,7 @@
         <canvas id="canvas"></canvas>
         <button onclick="snap()"></button>
         <h1><div id="predacc"></div></h1>
+        <h1><div id="stack"></div><h1>
+        <h1><div id="message"><div></h1>
     </body>
 </html>
