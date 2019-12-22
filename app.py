@@ -34,6 +34,10 @@ categorize = logreg_categorize
 def index():
     return open("static/index.html", "r").read()
 
+@app.route('/static/favicon.ico')
+def favicon():
+    return open('static/favicon.ico', 'rb').read()
+
 @app.route("/api/recognize", methods=["POST"])
 def recognize():
     raw_image = request.files["image"].read()
