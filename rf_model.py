@@ -6,7 +6,7 @@ from pose import get_pose
 from PIL import Image
 import pickle
 
-model = pickle.load(open(RFMODEL_MODEL_NAME, "rb"))
+rf_model = pickle.load(open(RFMODEL_MODEL_NAME, "rb"))
 
 def get_randomforest_pred(image, model):
     pose = get_pose(image)
