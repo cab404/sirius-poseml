@@ -27,6 +27,11 @@ def catboost_categorize(image):
     log.info(f"[Catboost] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
+def randomforest_categorize(image):
+    pred, acc = get_catboost_pred(image, catboost_models[1])
+    log.info(f"[RandomForest] Predicted {pred} with P={acc} !")
+    return (pred, acc)
+
 categorize = catboost_categorize
 
 @app.route('/')
