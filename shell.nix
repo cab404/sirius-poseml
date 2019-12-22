@@ -11,7 +11,7 @@ with pkgs; mkShell {
 
     (python37.withPackages(a: with a; [
 
-    jupyterhub jupyterlab flask imageio
+    jupyterhub jupyterlab flask imageio pylint
     ipython pytorch jupyter pandas numpy scikitimage pillow scipy pyyaml
     matplotlib cython tensorflow easydict munkres
 
