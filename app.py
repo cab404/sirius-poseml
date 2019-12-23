@@ -47,7 +47,7 @@ def randomforest_categorize(image):
     log.info(f"[Random Forest] Predicted {pred} with P={acc} !")
     return (pred, acc)
 
-categorize = treedec_categorize
+categorize = randomforest_categorize
 
 @app.route('/')
 def index():
