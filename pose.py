@@ -36,3 +36,7 @@ def get_pose(image, d=cfg):
 
     pose = predict.argmax_pose_predict(scmap, locref, d['cfg'].stride)
     return pose
+
+def clip_pose(prob):
+    leave = [2, 3, 6, 7, 8, 9, 10, 11]
+    return np.array(list(map(lambda a: prob[a], leave)))

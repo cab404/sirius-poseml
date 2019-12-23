@@ -53,6 +53,10 @@ categorize = treedec_categorize
 def index():
     return open("static/index.html", "r").read()
 
+@app.route('/static/chart.png')
+def chart():
+    return open('static/chart.png', 'rb').read()
+
 @app.route('/static/favicon.ico')
 def favicon():
     return open('static/favicon.ico', 'rb').read()

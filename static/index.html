@@ -3,6 +3,7 @@
     <head>
         <link rel="icon" href="/static/favicon.ico">
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <script>
             l = {}
             DELAY = 1000;
@@ -50,29 +51,29 @@
                     request.send(request_data)
                 })
             }
-			
-			async function blink(){
-				var steps = 25;
-				var red_change = 255 / steps;
-				var green_change = 255 / steps;
-				var blue_change = 255 / steps;
-				var currentcolor = [0, 0, 0];
-				document.body.style.backgroundColor = "#000000"
-				for(i = 0; i < steps; i++){
-					currentcolor[0] = parseInt(currentcolor[0] + red_change);
-					currentcolor[1] = parseInt(currentcolor[1] + green_change);
-					currentcolor[2] = parseInt(currentcolor[2] + blue_change);
-					document.body.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
-					await wait(20);
-				}
-				/*element.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
-				document.body.style.backgroundColor = "#FF0000"
-				await wait(100)
-				document.body.style.backgroundColor = "#FFFFFF"*/
-			}
+            
+            async function blink(){
+                var steps = 25;
+                var red_change = 255 / steps;
+                var green_change = 255 / steps;
+                var blue_change = 255 / steps;
+                var currentcolor = [0, 0, 0];
+                document.body.style.backgroundColor = "#000000"
+                for(i = 0; i < steps; i++){
+                    currentcolor[0] = parseInt(currentcolor[0] + red_change);
+                    currentcolor[1] = parseInt(currentcolor[1] + green_change);
+                    currentcolor[2] = parseInt(currentcolor[2] + blue_change);
+                    document.body.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
+                    await wait(20);
+                }
+                /*element.style.backgroundColor = 'rgb(' + currentcolor.toString() + ')';
+                document.body.style.backgroundColor = "#FF0000"
+                await wait(100)
+                document.body.style.backgroundColor = "#FFFFFF"*/
+            }
 
             function get_char(st) {
-                return String.fromCharCode('a'.charCodeAt(0) + 9 * st[0] + 3 * st[1] + st[2])
+                return String.fromCharCode('a'.charCodeAt(0) + 16 * st[0] + 4 * st[1] + st[2])
             }
             
             function eq(a, b) {
@@ -90,8 +91,8 @@
                 nonce = 0
                 while (true) {
                     await wait(DELAY)
-					blink()
-					await wait(25);
+                    blink()
+                    await wait(25);
                     image = await snap()
                     send_image(image).then((resp) => {
                         pred_acc.textContent = resp.pred + ' ' + resp.acc
@@ -125,15 +126,28 @@
 
         </script>
     </head>
-    <body onload="loop()">
-        <video id="video"></video>
-        <canvas id="canvas"></canvas>
-        <button onclick="snap()"></button>
-        <h1><div id="predacc"></div></h1>
-        <p> Current Delay: 400 <input type="range" min="400" max="3000" step="100" value="1000" id="slider" oninput="updTime()">
-		3000 </p>
-        <h1><div id="stack"></div><h1>
-        <h1><div id="message"><div></h1>
-        <h1><div id="message_pool"><div></h1>
+  
+    <body class="d-flex flex-column" onload="loop()">
+        <main role="main">
+        <div class="container">
+            <h1>PoseML</h1>
+            <img src="/static/chart.png" class="img-fluid">
+            <br>
+            <video id="video"></video>
+            <canvas id="canvas"></canvas>
+            <!-- <button onclick="snap()"></button> -->
+            <form>
+                <div class="form-group">
+                    <label for="slider">Current delay:</label>
+                    <input type="range" min="400" max="3000" value="1000" step="100" class="form-control-range" id="slider" oninput="updTime()">
+                </div>
+            </form>
+            <h1 class="display-1"><div id="stack"></div><h1>
+            <h1 class="display-1"><div id="message"><div></h1>
+            <h1 class="display-1"><div id="predacc"></div></h1>
+            <h1 class="display-1">><div id="message_pool"><div></h1>
+        </div>
+        </main>
+
     </body>
 </html>
