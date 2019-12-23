@@ -30,3 +30,5 @@ Also it can be easily retrained to be a kinect-like thingmajig.
 @heyley
 @cab404
 
+## Thanks to
+@eldar for a great model
